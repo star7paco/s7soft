@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:title="@string/reload_label"
+        android:icon="@android:drawable/ic_menu_search"
+        android:id="@+id/reload">
+  </item>
+  <item android:title="@string/delete_histroy_label"
+        android:icon="@android:drawable/ic_menu_search"
+        android:id="@+id/delete_histroy">
+  </item>
+</menu>

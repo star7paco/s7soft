@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, BiscuitActivity!</string>
+    <string name="app_name">Biscuit</string>
+    <string name="reload_label">Reload</string>
+    <string name="delete_histroy_label">delete_histroy</string>
+</resources>
