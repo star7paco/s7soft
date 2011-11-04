@@ -11,7 +11,5 @@ public class ItnewsServlet extends HttpServlet {
 		resp.getWriter().println("Hello, world");
 
 
-
-
 	}
 }

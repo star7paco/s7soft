@@ -3,7 +3,7 @@
   <cron>
     <url>/cronJobStart</url>
     <description>cron job</description>
-    <schedule>every 5 minutes</schedule>
+    <schedule>every 15 minutes</schedule>
     <timezone>Asia/Tokyo</timezone>
   </cron>
 </cronentries>
