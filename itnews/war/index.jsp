@@ -7,38 +7,67 @@
 
 <%@page import="java.util.List"%>
 <%@page import="com.sun.syndication.feed.synd.SyndEntry"%>
+<%@page import="com.sun.syndication.feed.synd.SyndContent"%>
 <%@page import="org.apache.commons.lang.builder.ToStringBuilder"%>
-<%@page import="org.apache.commons.lang.builder.ToStringStyle"%><html>
+<%@page import="org.apache.commons.lang.builder.ToStringStyle"%>
+<%@page import="com.s7soft.gae.itnews.db.ItemDao"%>
+<%@page import="com.s7soft.gae.itnews.bean.Item"%>
+
+<html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Hello App Engine</title>
   </head>
 
   <body>
-    <h1>Hello App Engine!</h1>
+    <h1><a href="http://www.s7soft.com">s7soft!</a></h1>
 
-    <table>
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Available Servlets:</td>
-      </tr>
-      <tr>
-        <td><a href="itnews">Itnews</a></td>
-      </tr>
-    </table>
+  <hr>
 
-<% RssReader rss = new RssReader("http://www.google.com/reader/public/atom/user%2F01437305406524732423%2Fbundle%2Fja"); %>
-<% List<SyndEntry> list = rss.getRss(); %>
+<% String pageString = request.getParameter("page"); %>
+<% int p = (pageString != null ? Integer.parseInt(pageString) : 1 ); %>
+<% int listcount = 5; %>
 
+<% int from = 1; %>
+<% int to = listcount; %>
 
-     <table>
-<% if(list != null) { %>
-<% for(SyndEntry item : list){ %>
-      <tr>
+<%
+if(p > 1) {
+	from = from +( p * listcount );
+	to = to + ( p * listcount );
+}
+%>
 
-        <td><%= ToStringBuilder.reflectionToString(item, ToStringStyle.SHORT_PREFIX_STYLE) %></td>
-      </tr>
+<% List<Item> list = ItemDao.getList( from , to ); %>
+     <table border="0">
+<% if(list != null || list.size() > 0) { %>
+	<% for(Item item : list){ %>
+	      <tr><td>
 
-<% } %>
+	      <table border="1">
+			<tr>
+				<td>Title : <%= item.getTitle() %></td>
+			</tr>
+			<tr>
+				<td><%= item.getBody().getValue() %></td>
+			</tr>
+   		  </table>
+   		  <br>
+
+	      </td></tr>
+
+	<% } %>
+
+	<tr><td>
+	<table>
+	<tr>
+	<% if(p > 1){ %><td><a href="index.jsp?page=<%= (p-1) %>"> < </a></td><% } %><td><a href="index.jsp?page=<%= (p+1) %>"> > </a></td>
+	</tr>
+	</table>
+	</td></tr>
+
+<% }else{ %>
+	<tr><td>データがありません</td></tr>
 <% } %>
     </table>
 
