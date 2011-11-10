@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
   <cron>
-    <url>/cronJobStart</url>
+    <url>/cronJa</url>
     <description>cron job</description>
-    <schedule>every 15 minutes</schedule>
+    <schedule>every 60 minutes</schedule>
     <timezone>Asia/Tokyo</timezone>
   </cron>
+
+    <cron>
+    <url>/cronko</url>
+    <description>cron job</description>
+    <schedule>every 60 minutes</schedule>
+    <timezone>Asia/Tokyo</timezone>
+  </cron>
+
 </cronentries>

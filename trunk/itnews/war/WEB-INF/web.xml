@@ -11,8 +11,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-class>com.s7soft.gae.itnews.ItnewsServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>CronServlet</servlet-name>
-		<servlet-class>com.s7soft.gae.itnews.CronServlet</servlet-class>
+		<servlet-name>CornKoServlet</servlet-name>
+		<servlet-class>com.s7soft.gae.itnews.CornKoServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CornJaServlet</servlet-name>
+		<servlet-class>com.s7soft.gae.itnews.CornJaServlet</servlet-class>
 	</servlet>
 
 
@@ -21,9 +25,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/itnews</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>CronServlet</servlet-name>
-		<url-pattern>/cronJobStart</url-pattern>
+		<servlet-name>CornKoServlet</servlet-name>
+		<url-pattern>/cronko</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CornJaServlet</servlet-name>
+		<url-pattern>/cronja</url-pattern>
+	</servlet-mapping>
+
+
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

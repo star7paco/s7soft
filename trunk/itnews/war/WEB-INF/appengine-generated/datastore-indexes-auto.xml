@@ -1,0 +1,16 @@
+<!-- Indices written at Thu, 10 Nov 2011 11:51:34 UTC -->
+
+<datastore-indexes>
+
+    <!-- Used 5 times in query history -->
+    <datastore-index kind="Item" ancestor="false" source="auto">
+        <property name="lang" direction="asc"/>
+        <property name="insDate" direction="desc"/>
+    </datastore-index>
+
+    <!-- Used 77 times in query history -->
+    <datastore-index kind="Title" ancestor="false" source="auto">
+        <property name="__key__" direction="desc"/>
+    </datastore-index>
+
+</datastore-indexes>
