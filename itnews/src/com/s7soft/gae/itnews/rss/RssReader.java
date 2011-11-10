@@ -3,6 +3,7 @@ package com.s7soft.gae.itnews.rss;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +28,11 @@ public class RssReader {
 	public SyndFeed syndFeeds;
 
 	public RssReader(String url){
+//		Properties systemSettings = System.getProperties();
+//		systemSettings.put("proxySet", "true");
+//		systemSettings.put("http.proxyHost", "proxy.j-com.co.jp");
+//		systemSettings.put("http.proxyPort", "8080");
+
 		try {
 			feedUrl = new URL(url);
 		} catch (MalformedURLException e) {
