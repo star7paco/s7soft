@@ -7,8 +7,14 @@
 <%@ page import="com.s7soft.gae.itnews.bean.Item"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Locale"%>
-<%@page import="com.s7soft.gae.itnews.util.AdSense"%>
+<%@ page import="com.s7soft.gae.itnews.util.AdSense"%>
+<%@ page import="com.s7soft.gae.itnews.db.BoardDao"%>
+<%@ page import="com.s7soft.gae.itnews.bean.Title"%>
+<%@ page import="com.s7soft.gae.itnews.bean.Body"%>
 
+<% log("Start v"); %>
+<% String keyStr = request.getParameter("k"); %>
+<% Long key = Long.valueOf(keyStr); %>
 <% Locale locale = request.getLocale(); %>
 <% String userAgent = request.getHeader("user-agent"); %>
 <%
@@ -59,8 +65,7 @@ if(mobile){
 <!doctype html public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<%@page import="com.s7soft.gae.itnews.db.BoardDao"%>
-<%@page import="com.s7soft.gae.itnews.bean.Title"%><html>
+<html>
 	<head>
 	<title>s7soft</title>
 
@@ -110,62 +115,65 @@ jQuery(function(){
 <body>
 
 
-<% String pageString = request.getParameter("p"); %>
-<% int p = (pageString != null ? Integer.parseInt(pageString) : 1 ); %>
-<% int listcount = 10; %>
-
-<% int from = 1; %>
-<% int to = listcount; %>
-
-<%
-if(p > 1) {
-	from = from +( p * listcount );
-	to = to + ( p * listcount );
-}
-%>
 
 <div data-role="page" data-theme="a" >
-	<div data-role="header" data-position="fixed">
-		<h1>s7soft</h1>
+
+<%
+Long max = BoardDao.getMaxID();
+log("max : " + max);
+Title title = BoardDao.get( key );
+log("title : " + title);
+if(title != null ) {
+	Body body = BoardDao.getBody( lang , key );
+	log("body : " + body);
+%>
+
+		<div data-role="header" data-position="fixed">
+		<h1><%= title.getTitle(lang) %></h1>
 		<a href="index.jsp?&<%= "lang="+lang %>" data-icon="home" rel="external">Home</a>
-	</div><!-- /header -->
-
-	<div data-role="content">
-
-	<ul data-role="listview"  data-inset="true">
-	<% List<Title> list = BoardDao.getList( from , to ); %>
-	<% if(list != null && list.size() > 0) { %>
-		<% for(Title title : list){ %>
-
-			<li><a href="v.jsp?k=<%= title.getKey() + "&lang="+lang %>" rel="external"><%= title.getTitle(lang) %></a></li>
-
-		<% } %>
+		</div><!-- /header -->
+<div data-role="content">
+<h6><%= title.getInsDate() %><br/><%= title.getTitle(lang) %></h6>
+<% if(body != null ) { %>
+		<%= adTop + body.getBody().getValue() + adFin %>
+<% } else { %>
+No data
+<% } %>
 
 
 
-	<% }else{ %>
+<% }else{ %>
 
-	not item
+<div data-role="header">
+<h1>not item</h1>
+<a href="index.jsp?&<%= "lang="+lang %>" data-icon="home" rel="external">Home</a>
+</div><!-- /header -->
 
-	<% } %>
-</ul>
-<br />
+<div data-role="content">
+not item
+
+
+
+<% } %>
+
 <fieldset class="ui-grid-a">
 
 	<div class="ui-block-a">
-		<a href="index.jsp?&p=<%= (p-1) + "&lang="+lang %>" data-role="button" data-icon="arrow-l" rel="external"  <%= (p > 1 ? "" : " class=\"ui-disabled\"" ) %>>back</a></div>
+		<a href="v.jsp?&k=<%= (key-1) + "&lang="+lang %>" data-role="button" data-icon="arrow-l" rel="external" <%= (key <= 1 ? " class=\"ui-disabled\"" : "" ) %>>back</a></div>
 
-
+	<% if(key < max){ %>
 	<div class="ui-block-b">
-		<a href="index.jsp?&p=<%= (p+1) + "&lang="+lang %>" data-role="button" data-icon="arrow-r" rel="external" data-iconpos="right" >next</a></div>
-
+		<a href="v.jsp?&k=<%= (key+1) + "&lang="+lang %>" data-role="button" data-icon="arrow-r" rel="external"  data-iconpos="right" >next</a></div>
+	<% }else{ %>
+	<div class="ui-block-b">
+		<a href="v.jsp?&k=<%= (key+1) + "&lang="+lang %>" data-role="button" data-icon="arrow-r" rel="external" class="ui-disabled" data-iconpos="right" >next</a></div>
+	<% } %>
 </fieldset><!-- /ui-grid-a -->
+</div><!-- /content -->
 
-	</div><!-- /content -->
-
-	<div data-role="footer" data-theme="d" data-position="fixed">
-		<center><%= adFooter %></center>
-	</div><!-- /footer -->
+<div data-role="footer" data-theme="d" data-position="fixed">
+	<center><%= adFooter %></center>
+</div><!-- /footer -->
 
 </div><!-- /page -->
 
